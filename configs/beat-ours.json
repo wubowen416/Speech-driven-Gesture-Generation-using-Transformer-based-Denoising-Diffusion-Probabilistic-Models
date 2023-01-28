@@ -1,0 +1,105 @@
+{
+    "Data": {
+        "src_dir_path": "../beat-data-download/BEAT",
+        "spt_dir_path": "./data/sep-wav-txt-upper41",
+        "dst_dir_path": "./data/sep-wav-txt-upper41-logrot-winlen40",
+        "human_ids": [1],
+        "pose_fps": 20,
+        "wav_sr": 16000,
+        "sample_duration": 60.0,
+        "pose_window_len": 40,
+        "pose_stride_len": 20,
+        "pose_representation": "log_rot",
+        "hierarchy_path": "./datasets/hierarchy_upper.txt",
+        "joints": [
+            "Spine1",
+            "Spine2",
+            "Spine3",
+            "RightShoulder",
+            "RightArm",
+            "RightForeArm",
+            "RightHand",
+            "RightHandMiddle1",
+            "RightHandMiddle2",
+            "RightHandMiddle3",
+            "RightHandRing1",
+            "RightHandRing2",
+            "RightHandRing3",
+            "RightHandPinky1",
+            "RightHandPinky2",
+            "RightHandPinky3",
+            "RightHandIndex1",
+            "RightHandIndex2",
+            "RightHandIndex3",
+            "RightHandThumb1",
+            "RightHandThumb2",
+            "RightHandThumb3",
+            "LeftShoulder",
+            "LeftArm",
+            "LeftForeArm",
+            "LeftHand",
+            "LeftHandMiddle1",
+            "LeftHandMiddle2",
+            "LeftHandMiddle3",
+            "LeftHandRing1",
+            "LeftHandRing2",
+            "LeftHandRing3",
+            "LeftHandPinky1",
+            "LeftHandPinky2",
+            "LeftHandPinky3",
+            "LeftHandIndex1",
+            "LeftHandIndex2",
+            "LeftHandIndex3",
+            "LeftHandThumb1",
+            "LeftHandThumb2",
+            "LeftHandThumb3"
+        ]
+    },
+
+    "Model": {
+        "type": "s2g_v2",
+        "d_model": 256,
+        "dropout_prob": 0.0,
+        "Encoder": {
+            "type": "ha2g"
+        },
+        "Decoder": {
+            "type": "oneway_cross_attention",
+            "heads": 8,
+            "n_layers": 4
+        },
+        "Diffusion": {
+            "type": "gaussian",
+            "noise_schedule": "linear",
+            "diffusion_steps": 1000,
+            "timestep_respacing": "",
+            "model_var_type": "fixed_small"
+        },
+        "Generate": {
+            "pose_seed_len": 10,
+            "smooth_transition": false,
+            "trans_factor": 0.575
+        }
+    },
+
+    "Train": {
+        "lr": 1,
+        "weight_decay": 0,
+        "batch_size": 64,
+        "max_training_steps": "200k",
+        "metric": "val_loss",
+        "goal": "minimize",
+        "world_size": "auto",
+        "early_stop_threshold_in_step": "100k",
+        "Scheduler": {
+            "type": "noamxf",
+            "warmup_steps": "4k",
+            "d_model": 256
+        }
+    },
+
+    "Meta": {
+        "project": "audio-to-gesture-and-hand",
+        "log_dir": "./log"
+    }
+}
